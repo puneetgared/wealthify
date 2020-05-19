@@ -24,22 +24,22 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Graph from './components/graph';
-
+import Cards from './components/Cards'
 const App = () => {
   const [initialInvestment, setInitialInvestment] = useState(45000);
   return (
     <>
       <View style={styles.appContainer}>
         <Graph/>
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <View style={styles.forecastInputContainer}>
             <Text style={{fontSize: 22}}>Initial Investment</Text>
             <View>
               <Text style={styles.inputDisplay}>£{initialInvestment}</Text>
             </View>
           </View>
-        </View>
-
+        </View> */}
+        <Cards />
       </View>
     </>
   );

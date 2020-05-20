@@ -1,4 +1,4 @@
-import {Card,ListItem, Button} from 'react-native-elements';
+import {Card,ListItem, Button,Icon} from 'react-native-elements';
 import React from 'react'
 import {
     View,
@@ -7,20 +7,24 @@ import {
   } from 'react-native';
   const items = [{
     name:'Initial Investment',
-    val : 47500
+    defaultVal : '10000',
+    metric : 'INR',
+    icon: 'money'
 },
 {
     name:'Time Horizon',
-    val : '10 Years'
+    defaultVal : '5',
+    metric : 'Years',
+    icon: 'hourglass'
+   
 },
 {
     name:'Monthly Contribution',
-    val : 250
+    defaultVal : '250',
+    metric : 'INR',
+    icon: 'calendar'
 },
-{
-    name:'Your Portfolio is at',
-    val : 'risk level 4'
-}] ;
+] ;
 export default cards = () => {
     return(
     <Card >
@@ -30,10 +34,21 @@ export default cards = () => {
         key={i}
         title={item.name}
         bottomDivider
-        rightTitle={item.val}
         titleStyle={styles.inputText}
-        rightTitleStyle={styles.inputValue}
+        leftIcon = {
+          <Icon
+            name= {item.icon}
+            type='font-awesome'
+            color='#517fa4'
+          />
+        }
+        input = {{
+          keyboardType: 'numeric',
+          defaultValue: item.defaultVal,
+          inputStyle : styles.inputValue
+        }}
       />
+     
       );
      })
     }
@@ -60,7 +75,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         lineHeight:24,
         fontWeight:'bold',
-        fontFamily:'SF Pro Display'
+        fontFamily:'SF Pro Display',
+        textAlign:'right'
+    
       },
     button : {
       height:52,

@@ -1,5 +1,5 @@
 import {Card,ListItem, Button,Icon} from 'react-native-elements';
-import React from 'react'
+import React, { useState } from 'react'
 import {
     View,
     Text,
@@ -26,6 +26,24 @@ import {
 },
 ] ;
 export default cards = () => {
+    const [initialInvestment,setInititialInvesment] = useState(1000);
+    const [timeHorizon,setTimeHorizon] = useState(5);
+    const [monthlyContribution,setMonthlyContribution] = useState(250);
+
+    const confirmAmount = () => {
+        
+    }
+    const setInputText = (valueToSet, itemName) => {
+      if(itemName == 'Initial Investment'){
+        setInititialInvesment(valueToSet)
+      }
+      else if(itemName == 'Time Horizon'){
+        setTimeHorizon(valueToSet)
+      }
+      else {
+        setMonthlyContribution(valueToSet)
+      }
+    }
     return(
     <Card >
     {
@@ -45,7 +63,8 @@ export default cards = () => {
         input = {{
           keyboardType: 'numeric',
           defaultValue: item.defaultVal,
-          inputStyle : styles.inputValue
+          inputStyle : styles.inputValue,
+          onChangeText : value => setInputText(value,item.name)
         }}
       />
      
@@ -54,10 +73,14 @@ export default cards = () => {
     }
     <Button
     buttonStyle={styles.button}
-    title='Confirm this amount' />
+    title='Confirm this amount'
+    onPress = {confirmAmount} />
     </Card>
     )
+  
 };
+
+  
 
 
 const styles = StyleSheet.create({

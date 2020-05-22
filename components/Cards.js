@@ -5,6 +5,8 @@ import {
     Text,
     StyleSheet
   } from 'react-native';
+import axios from 'axios';
+
   const items = [{
     name:'Initial Investment',
     defaultVal : '10000',
@@ -25,27 +27,26 @@ import {
     icon: 'calendar'
 },
 ] ;
-export default cards = () => {
-    const [initialInvestment,setInititialInvesment] = useState(1000);
-    const [timeHorizon,setTimeHorizon] = useState(5);
-    const [monthlyContribution,setMonthlyContribution] = useState(250);
-
+export default cards = (props) => {
+    const {initial,time,monthlyContribution, setInitial, setTime, setContribution, setchartData} = props
     const confirmAmount = () => {
-        
+       axios.get(`https://wealthexpert.fidelity.de/api/goal/forecast?initialContribution=${initial}&monthlyContribution=${monthlyContribution}&timeHorizon=${time}`).then(res => {
+         setchartData(res)
+       })
     }
     const setInputText = (valueToSet, itemName) => {
       if(itemName == 'Initial Investment'){
-        setInititialInvesment(valueToSet)
+        setInitial(valueToSet)
       }
       else if(itemName == 'Time Horizon'){
-        setTimeHorizon(valueToSet)
+        setTime(valueToSet)
       }
       else {
-        setMonthlyContribution(valueToSet)
+        setContribution(valueToSet)
       }
     }
     return(
-    <Card >
+    <Card containerStyle = {{marginLeft:0, marginRight:0}} >
     {
      items.map((item,i) => {
       return(  <ListItem
@@ -79,9 +80,6 @@ export default cards = () => {
     )
   
 };
-
-  
-
 
 const styles = StyleSheet.create({
     inputText: {

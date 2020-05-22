@@ -27,6 +27,9 @@ import Graph from './components/graph';
 import Cards from './components/Cards'
 const App = () => {
   const [initialInvestment, setInitialInvestment] = useState(45000);
+  const [timeHorizon,setTimeHorizon] = useState(5);
+  const [monthlyContribution,setMonthlyContribution] = useState(250);
+  const [chartData,setchartData] = useState([]);
   return (
     <>
       <View style={styles.appContainer}>
@@ -39,7 +42,7 @@ const App = () => {
             </View>
           </View>
         </View> */}
-        <Cards />
+        <Cards initial = {initialInvestment} time = {timeHorizon} monthlyContribution= {monthlyContribution} setInitial = {setInitialInvestment} setTime = {setTimeHorizon} setContribution = {setMonthlyContribution } setchartData = {setchartData}/>
       </View>
     </>
   );

@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,25 +24,34 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Graph from './components/graph';
-import Cards from './components/Cards'
+import Cards from './components/Cards';
 const App = () => {
-  const [initialInvestment, setInitialInvestment] = useState(45000);
-  const [timeHorizon,setTimeHorizon] = useState(5);
-  const [monthlyContribution,setMonthlyContribution] = useState(250);
-  const [chartData,setchartData] = useState([]);
+  const [initialInvestment, setInitialInvestment] = useState(10000);
+  const [timeHorizon, setTimeHorizon] = useState(5);
+  const [monthlyContribution, setMonthlyContribution] = useState(250);
+  const [chartData, setchartData] = useState([]);
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <View style={styles.appContainer}>
-        <Graph/>
-        {/* <View style={styles.inputContainer}>
-          <View style={styles.forecastInputContainer}>
-            <Text style={{fontSize: 22}}>Initial Investment</Text>
-            <View>
-              <Text style={styles.inputDisplay}>£{initialInvestment}</Text>
-            </View>
-          </View>
-        </View> */}
-        <Cards initial = {initialInvestment} time = {timeHorizon} monthlyContribution= {monthlyContribution} setInitial = {setInitialInvestment} setTime = {setTimeHorizon} setContribution = {setMonthlyContribution } setchartData = {setchartData}/>
+        <View style={styles.graph}>
+          <Graph
+            forecastData={chartData}
+            loading={loading}
+            timeHorizon={timeHorizon}
+            initialInvestment={initialInvestment}
+            monthlyContribution={monthlyContribution}
+          />
+        </View>
+        <View style={styles.panel}>
+          <Cards
+            setInitial={setInitialInvestment}
+            setTime={setTimeHorizon}
+            setMonthlyContribution={setMonthlyContribution}
+            setchartData={setchartData}
+            setLoading={setLoading}
+          />
+        </View>
       </View>
     </>
   );
@@ -53,19 +62,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  inputContainer: {
-    height: '40%',
+  graph: {
+    flex: 2.1,
   },
-  forecastInputContainer: {
+  panel: {
     flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    margin: 10
+    // paddingBottom:10
   },
-  inputDisplay: {
-    color: '#0162FF',
-    fontSize: 28
-  }
 });
 
 export default App;

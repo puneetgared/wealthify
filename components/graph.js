@@ -7,16 +7,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
+import GraphDetail from './GraphDetail';
 
-// import { forecastData } from './forecastData';
-
-const Graph = ({forecastData, loading, timeHorizon}) => {
-  //   console.log('Graph forecastdata', JSON.stringify(forecastData, null, 2));
+// import {forecastData} from './forecastData';
+// forecastData,
+const Graph = ({forecastData,loading, timeHorizon, initialInvestment, monthlyContribution}) => {
+    console.log('Graph forecastdata', JSON.stringify(forecastData, null, 2));
   let body;
-  const updateDisplayGraph = () => {
-    if (!loading && forecastData.length > 0)
-      body = displayGraph(forecastData, timeHorizon);
-  };
 
   if (loading)
     body = (
@@ -28,7 +25,9 @@ const Graph = ({forecastData, loading, timeHorizon}) => {
     );
   if (!loading && !Array.isArray(forecastData))
     body = <Text>{forecastData}</Text>;
-  updateDisplayGraph();
+
+  if (!loading && forecastData.length > 0)
+    body = displayGraph(forecastData, timeHorizon);
 
   return (
     <View style={styles.graphContainer}>
@@ -37,18 +36,31 @@ const Graph = ({forecastData, loading, timeHorizon}) => {
     </View>
   );
 };
-
-const displayGraph = (forecastData, timeHorizon) => {
+const calculateSum = (amounts) => {
+    return amounts
+    .splice(amounts.length - 5, 5)
+    .reduce((acc, curr) => curr + acc, 0)
+    .toFixed(2);
+}
+const displayGraph = (forecastData, timeHorizon,initialInvestment, monthlyContribution) => {
   // {!loading && forecastData.length !== 0 &&
   const labels = forecastData
     .map((data, index) => (index % 2 == 0 ? data.year : null))
     .filter((year) => year !== null);
+
   const belowAverage = forecastData.map((data) => data.averages['5']);
   const average = forecastData.map((data) => data.averages['50']);
   const aboveAverage = forecastData.map((data) => data.averages['95']);
+  // const totalContribution = initialInvestment + 
+
+  const aboveAverageAmount = calculateSum(aboveAverage);
+  const averageAmount = calculateSum(average);
+  const belowAverageAmount = calculateSum(belowAverage);
+  
+  console.log('Above Average', aboveAverage, aboveAverageAmount);
 
   return (
-    <View>
+    <>
       <LineChart
         data={{
           labels,
@@ -75,7 +87,7 @@ const displayGraph = (forecastData, timeHorizon) => {
         withDots={true}
         withShadow={true}
         withInnerLines={false}
-        yAxisLabel="$"
+        // yAxisLabel="$"
         yAxisSuffix="k"
         yAxisInterval={1} // optional, defaults to 1
         getDotProps={(dataPoint, index) => {
@@ -102,7 +114,31 @@ const displayGraph = (forecastData, timeHorizon) => {
         // bezier
         style={styles.graph}
       />
-    </View>
+        <View style={[styles.graphDetail]}>
+          <GraphDetail
+            header="Above-average Scenario"
+            color="#4da6ff"
+            body={aboveAverageAmount}
+          />
+          <GraphDetail
+            header="Average Scenario"
+            color="#a3e34c"
+            body={averageAmount}
+          />
+        </View>
+        <View style={[styles.graphDetail]}>
+          <GraphDetail
+            header="Below-average Scenario"
+            color="#ffc61d"
+            body={belowAverageAmount}
+          />
+          <GraphDetail
+            header="Total Contributions"
+            color="#000000"
+            body={aboveAverageAmount}
+          />
+        </View>
+    </>
   );
 };
 
@@ -116,6 +152,14 @@ const styles = StyleSheet.create({
   graph: {
     paddingLeft: 10,
     borderRadius: 16,
+    flex:9
+  },
+  graphDetail: {
+    flex: 1,
+    flexDirection: 'row',
+    // justifyContent: 'flex-start',
+    // alignItems: 'flex-start',
+    paddingBottom: 20
   },
   graphHeader: {
     color: '#ffffff',

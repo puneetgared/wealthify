@@ -45,12 +45,11 @@ export default cards = (props) => {
     console.log('Cards confirmAmount', panelState);
     try {
       setLoading(true);
-      const result = await axios.get(
-        `https://wealthexpert.fidelity.de/api/goal/forecast?initialContribution=${panelState.initial}&monthlyContribution=${panelState.monthlyContribution}&timeHorizon=${
-          panelState.time + 5
-        }`
-      );
+      const url = `https://wealthexpert.fidelity.de/api/goal/forecast?initialContribution=${panelState.initial}&monthlyContribution=${panelState.monthlyContribution}&timeHorizon=${panelState.time + 5}`
+      console.log('URL LLL ', url)
+      const result = await axios.get(url);
       setchartData(result.data);
+      console.log('Forecast api data', result.data)
 
       setTime(panelState.time);
       setInitial(panelState.initial);

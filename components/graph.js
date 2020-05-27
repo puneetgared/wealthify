@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
 import GraphDetail from './GraphDetail';
+import {ScrollView} from 'react-native'
 
 // import {forecastData} from './forecastData';
 // forecastData,
@@ -60,6 +61,7 @@ const displayGraph = (forecastData, timeHorizon,initialInvestment, monthlyContri
   console.log('Above Average', aboveAverage, aboveAverageAmount);
 
   return (
+    <ScrollView>
     <>
       <LineChart
         data={{
@@ -139,6 +141,7 @@ const displayGraph = (forecastData, timeHorizon,initialInvestment, monthlyContri
           />
         </View>
     </>
+    </ScrollView>
   );
 };
 

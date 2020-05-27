@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   panel: {
     flex: 1,
-    // paddingBottom:10
+    paddingBottom:50
   },
 });
 

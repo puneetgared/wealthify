@@ -7,9 +7,10 @@ const items = [
   {
     name: 'Initial Investment',
     defaultVal: '10000',
-    metric: 'INR',
+    metric: '£',
     icon: 'money',
     shortName: 'initial',
+    max : 9
   },
   {
     name: 'Time Horizon',
@@ -17,13 +18,15 @@ const items = [
     metric: 'Years',
     icon: 'hourglass',
     shortName: 'time',
+    max : 6
   },
   {
     name: 'Monthly Contribution',
     defaultVal: '250',
-    metric: 'INR',
+    metric: '£',
     icon: 'calendar',
     shortName: 'monthlyContribution',
+    max : 7
   },
 ];
 export default cards = (props) => {
@@ -44,6 +47,7 @@ export default cards = (props) => {
   const confirmAmount = async () => {
     console.log('Cards confirmAmount', panelState);
     try {
+      console.log(typeof panelState.initial)
       setLoading(true);
       const url = `https://wealthexpert.fidelity.de/api/goal/forecast?initialContribution=${panelState.initial}&monthlyContribution=${panelState.monthlyContribution}&timeHorizon=${panelState.time + 5}`
       console.log('URL LLL ', url)
@@ -62,8 +66,9 @@ export default cards = (props) => {
       setchartData('Error Occurred While running forcaster');
     }
   };
-  const setInputText = (value, shortName) => {
-    setPanelState({...panelState, [shortName]: +value});
+  const setInputText = (value, shortName, metric) => {
+    console.log('input from user ',value )
+    setPanelState({...panelState, [shortName]: +parseFloat(value.replace(metric,''))});
   };
   return (
     <View>
@@ -71,6 +76,7 @@ export default cards = (props) => {
         {items.map((item, i) => {
           return (
             <ListItem
+              containerStyle = {{flexShrink : 1}}
               key={i}
               title={item.name}
               bottomDivider
@@ -80,9 +86,10 @@ export default cards = (props) => {
               }
               input={{
                 keyboardType: 'numeric',
-                defaultValue: item.defaultVal,
+                defaultValue: item.shortName == 'time' ? item.defaultVal + item.metric : item.metric + item.defaultVal,
                 inputStyle: styles.inputValue,
-                onChangeText: (value) => setInputText(value, item.shortName),
+                onChangeText: (value) => setInputText(value, item.shortName, item.metric),
+                maxLength : item.max
               }}
             />
           );
@@ -108,6 +115,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     fontFamily: 'SF Pro Display',
     lineHeight: 18,
+    textAlign : 'justify',
   },
   inputValue: {
     color: '#0162FF',

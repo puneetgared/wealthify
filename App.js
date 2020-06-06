@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  Dimensions
 } from 'react-native';
 
 import {
@@ -59,11 +60,12 @@ const App = () => {
 
 const styles = StyleSheet.create({
   appContainer: {
-    flex: 1,
     justifyContent: 'center',
+    flex:1,
+    // flexWrap: "wrap"    
   },
   graph: {
-    flex: 2.1,
+    flex: 1.9,
   },
   panel: {
     flex: 1,

@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#ffffff',
-    fontSize: 16
+    fontSize: 12
   },
   body: {
     // flex:1,
     color: '#ffffff',
-    fontSize: 15,
+    fontSize: 11,
     marginLeft: 20
   },
   bodyRow: {
@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "flex-start",
-  
-    
   },  
   circle: {
     height: 15,

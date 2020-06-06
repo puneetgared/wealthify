@@ -42,7 +42,7 @@ const Graph = ({
 
   return (
     <View style={styles.graphContainer}>
-      <Text style={styles.graphHeader}>Expected Outcome Forecast</Text>
+      <Text style={styles.graphHeader}>Expected Forecast</Text>
       {body}
     </View>
   );
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   graph: {
     paddingLeft: 10,
     borderRadius: 16,
-    flex: 9,
+    flex: 13,
   },
   graphDetail: {
     flex: 1,

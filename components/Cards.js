@@ -62,11 +62,11 @@ export default cards = (props) => {
       setchartData('Error Occurred While running forcaster');
     }
   };
-
+  
   const setInputText = (value, shortName) => {
     setPanelState({...panelState, [shortName]: +value});
   };
-
+  
   return (
     <View>
       <Card containerStyle={styles.root}>
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   root: {
     margin:0,
     padding:0
-
   },
   inputText: {
     color: '#333840',

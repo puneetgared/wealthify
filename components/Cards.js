@@ -47,6 +47,7 @@ export default cards = (props) => {
     monthlyContribution: 250,
   });
 
+  
   const confirmAmount = async () => {
     console.log('Cards confirmAmount', panelState);
     try {
@@ -74,12 +75,12 @@ export default cards = (props) => {
   };
   
   return (
-    <View>
+    <View style = {{flex :1}}>
       <Card containerStyle={styles.root}>
         {items.map((item, i) => {
           return (
             <ListItem
-              style = {{marginRight : -35}}
+              style = {{marginRight : -35, height : 70}}
               key={i}
               title={item.title}
               titleStyle={styles.title}
@@ -113,7 +114,8 @@ export default cards = (props) => {
 const styles = StyleSheet.create({
   root: {
     margin:0,
-    padding:0
+    padding:0,
+    flex : 1
   },
   title: {
     color: '#333840',
